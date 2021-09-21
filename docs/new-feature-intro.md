@@ -11,6 +11,7 @@ This feature does a lot of things you want!
 - Item 1
 - Item 2
 - Item 3
+- Item 4
 
 ## Links to more info
 
