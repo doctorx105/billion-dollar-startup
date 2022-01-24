@@ -1,0 +1,44 @@
+name: Bug Report
+description: Use this template to report a bug in the application
+title: "🐛 "
+labels: [bug, triage]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Describe the bug and any repro steps
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: URL
+      description: "What's the URL of the page causing the issue"
+      placeholder: "[URL]"
+      value: "https://"
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      description: "What area of the application is this bug in?"
+      options:
+        - 🎨 Front-end
+        -  ⚙ Back-end
+        - 🛢 Database
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: "What do you think the priority of this bug should be?"
+      options:
+        - 🔻 Low
+        - 😐 Medium
+        - 🚒 High
+        - 😰 Urgent
+    validations:
+      required: true
+  - type: textarea
+    id: other
+    attributes:
+      label: Other
+      description: "Any other details we need to know about?"
