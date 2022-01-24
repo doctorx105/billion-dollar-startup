@@ -3,10 +3,11 @@ description: Use this template to report a bug in the application
 title: "🐛 "
 labels: [bug, triage]
 body:
-  - type: markdown
+  - type: textarea
+    id: description
     attributes:
-      value: |
-        Describe the bug and any repro steps
+      label: Description
+      description: "Description of the bug including detailed repro steps"
     validations:
       required: true
   - type: input
@@ -37,8 +38,3 @@ body:
         - 😰 Urgent
     validations:
       required: true
-  - type: textarea
-    id: other
-    attributes:
-      label: Other
-      description: "Any other details we need to know about?"
