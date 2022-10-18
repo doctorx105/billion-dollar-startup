@@ -30,12 +30,14 @@ jobs:
   
   
   deploy-test:
+    needs: build
     uses: DamovisaInc/billion-dollar-startup/.github/workflows/deploy-app.yml@main
     with:
       environmentName: Testing
       artifactName: node-app
 
   deploy-production:
+    needs: deploy-test
     uses: DamovisaInc/billion-dollar-startup/.github/workflows/deploy-app.yml@main
     with:
       environmentName: Production
