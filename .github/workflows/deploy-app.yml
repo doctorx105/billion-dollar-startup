@@ -1,0 +1,39 @@
+name: Deploy Application
+
+# Run on call from other workflow
+on:
+  workflow_call:
+    inputs:
+      environmentName:
+        description: "The environment to deploy to"
+        required: true
+        default: "Test"
+        type: string
+      artifactName:
+        description: "The name of the artifact uploaded with actions/upload-artifact"
+        required: true
+        default: "artifact"
+        type: string
+
+jobs:
+  deploy:
+    
+    name: Deploy to ${{ inputs.environmentName }}
+    environment: 
+      name: ${{ inputs.environmentName }}
+      url: ${{ inputs.environmentName == 'Production' && 'https://billiondollarstartup.xyz' || format('https://{0}.billiondollarstartup.xyz', inputs.environmentName) }}
+    
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Download artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: ${{ inputs.artifactName }}
+        path: ./artifact
+        
+    - name: Deploy to ${{ inputs.environmentName }}
+      run: |
+        echo 'Deploying'
+        for i in {1..8}; do echo -n "."; sleep 1; done
