@@ -10,23 +10,30 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
+    - name: Set up .NET Core
+      uses: actions/setup-dotnet@v2
       with:
-        node-version: ${{ env.NODE_VERSION }}
-        cache: 'npm'
+        dotnet-version: 5
 
-    - name: npm install, build, and test
-      run: |
-        npm install
-        npm run build --if-present
-        npm run test --if-present
-    
-    - name: Upload artifact for deployment
+    - name: Set up dependency caching for faster builds
+      uses: actions/cache@v3
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
+
+    - name: Build with dotnet
+      run: dotnet build --configuration Release
+
+    - name: dotnet publish
+      run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/billion-dollar-startup
+  
+    - name: Upload artifact for deployment job
       uses: actions/upload-artifact@v3
       with:
-        name: node-app
-        path: .
+        name: dotnet-app
+        path: ${{env.DOTNET_ROOT}}/billion-dollar-startup
   
   
   deploy-test:
@@ -34,12 +41,12 @@ jobs:
     uses: DamovisaInc/billion-dollar-startup/.github/workflows/deploy-app.yml@main
     with:
       environmentName: Testing
-      artifactName: node-app
+      artifactName: dotnet-app
 
   deploy-production:
     needs: deploy-test
     uses: DamovisaInc/billion-dollar-startup/.github/workflows/deploy-app.yml@main
     with:
       environmentName: Production
-      artifactName: node-app
+      artifactName: dotnet-app
       
