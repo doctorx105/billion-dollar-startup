@@ -25,7 +25,7 @@ jobs:
     - name: Upload artifact for deployment
       uses: actions/upload-artifact@v3
       with:
-        name: artifact
+        name: node-app
         path: .
   
   
@@ -33,9 +33,11 @@ jobs:
     uses: DamovisaInc/billion-dollar-startup/.github/workflows/deploy-app.yml@main
     with:
       environmentName: Testing
+      artifactName: node-app
 
   deploy-production:
     uses: DamovisaInc/billion-dollar-startup/.github/workflows/deploy-app.yml@main
     with:
       environmentName: Production
+      artifactName: node-app
       
