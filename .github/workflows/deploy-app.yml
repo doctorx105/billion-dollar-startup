@@ -1,4 +1,4 @@
-name: Deploy Application
+name: (callable) Deploy Application
 
 # Run on call from other workflow
 on:
