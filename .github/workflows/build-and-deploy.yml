@@ -6,7 +6,7 @@ on:
     
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: large-runner
     steps:
     - uses: actions/checkout@v3
 
@@ -43,9 +43,15 @@ jobs:
       environmentName: Testing
       artifactName: dotnet-app
 
+  deploy-staging:
+    needs: deploy-test
+    uses: DamovisaInc/billion-dollar-startup/.github/workflows/deploy-app.yml@main
+    with:
+      environmentName: Staging
+      artifactName: dotnet-app
 
   deploy-production:
-    needs: deploy-test
+    needs: deploy-staging
     uses: DamovisaInc/billion-dollar-startup/.github/workflows/deploy-app.yml@main
     with:
       environmentName: Production
