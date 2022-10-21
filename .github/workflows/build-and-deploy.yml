@@ -42,7 +42,7 @@ jobs:
     with:
       environmentName: Testing
       artifactName: dotnet-app
-
+      
   deploy-staging:
     needs: deploy-test
     uses: DamovisaInc/billion-dollar-startup/.github/workflows/deploy-app.yml@main
